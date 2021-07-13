@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    
+    <main>
+        <section class="tela">
+            <p id="valores" ></p>
+        </section>
+        <section class="botoes">
+            <button id="1" class="bt" onclick="add(1);" >1</button>
+            <button id="2" class="bt" onclick="add(2);">2</button>
+            <button id="3" class="bt" onclick="add(3);">3</button><button id="soma" class="bt" onclick="sin('+');" >+</button>
+            <button id="4" class="bt" onclick="add(4);">4</button>
+            <button id="5" class="bt" onclick="add(5);">5</button>
+            <button id="6" class="bt" onclick="add(6);">6</button><button id="sub" class="bt" onclick="sin('-');">-</button>
+            <button id="7" class="bt" onclick="add(7);">7</button>
+            <button id="8" class="bt" onclick="add(8);">8</button>
+            <button id="9" class="bt" onclick="add(9);">9</button><button id="mult" class="bt" onclick="sin('x');">x</button>
+        </section>
+        <section class="botoes2">
+            <button id="0" class="bt" onclick="add(0);">0</button><button id="div" class="bt" onclick="sin('/');">/</button>
+        </section>
+        <section class="bt2">
+            <button  class="bt" onclick="calc();" >=</button>
+        </section>
+    </main>
+
+    <script>
+        let valor = "";
+        let valorInicial = "";
+        let sinal = "";
+        let limp = false;
+
+        function add(n){ 
+            if(limp){
+                document.getElementById("valores").innerHTML = "";
+            }           
+            valor = valor + n;
+            document.getElementById("valores").innerHTML += n;
+        };
+
+        function sin(params) {
+            valorInicial = valor;
+            valor = "";
+            sinal = params;
+            document.getElementById("valores").innerHTML += " "+ sinal +" ";
+        };
+
+        function calc(){
+            valor = parseFloat(valor);
+            valorInicial = parseFloat(valorInicial);
+            let res = 0;
+
+            if(sinal == "+"){
+                res = valorInicial + valor;
+                document.getElementById("valores").innerHTML = exibeResultado(valorInicial, valor, sinal, res);
+            }
+            if(sinal == "-"){
+                res = valorInicial - valor;
+                document.getElementById("valores").innerHTML = exibeResultado(valorInicial, valor, sinal, res);
+            }
+            if(sinal == "x"){
+                res = valorInicial * valor;
+                document.getElementById("valores").innerHTML = exibeResultado(valorInicial, valor, sinal, res);
+            }
+            if(sinal == "/"){
+                res = valorInicial / valor;
+                document.getElementById("valores").innerHTML = exibeResultado(valorInicial, valor, sinal, res);
+            }
+
+            valor = ""
+            valorInicial = ""
+            limp = true
+        }
+        function exibeResultado(v1, v2, s, res){
+            return `${v1} ${s} ${v2} = ${res}`
+        }
+        
+    </script>
+
+</body>
+</html>
