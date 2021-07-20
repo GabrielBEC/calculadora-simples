@@ -9,81 +9,90 @@
 </head>
 <body>
     
+    <h1>Calculadora</h1>
     <main>
         <section class="tela">
             <p id="valores" ></p>
         </section>
         <section class="botoes">
-            <button id="1" class="bt" onclick="add(1);" >1</button>
-            <button id="2" class="bt" onclick="add(2);">2</button>
-            <button id="3" class="bt" onclick="add(3);">3</button><button id="soma" class="bt" onclick="sin('+');" >+</button>
-            <button id="4" class="bt" onclick="add(4);">4</button>
-            <button id="5" class="bt" onclick="add(5);">5</button>
-            <button id="6" class="bt" onclick="add(6);">6</button><button id="sub" class="bt" onclick="sin('-');">-</button>
-            <button id="7" class="bt" onclick="add(7);">7</button>
-            <button id="8" class="bt" onclick="add(8);">8</button>
-            <button id="9" class="bt" onclick="add(9);">9</button><button id="mult" class="bt" onclick="sin('x');">x</button>
+            <button id="1" class="bt" onclick="calculadora.add(1)" >1</button>
+            <button id="2" class="bt" onclick="calculadora.add(2);">2</button>
+            <button id="3" class="bt" onclick="calculadora.add(3);">3</button><button id="soma" class="bt" onclick="calculadora.sin('+')" >+</button>
+            <button id="4" class="bt" onclick="calculadora.add(4);">4</button>
+            <button id="5" class="bt" onclick="calculadora.add(5);">5</button>
+            <button id="6" class="bt" onclick="calculadora.add(6);">6</button><button id="sub" class="bt" onclick="calculadora.sin('-');">-</button>
+            <button id="7" class="bt" onclick="calculadora.add(7);">7</button>
+            <button id="8" class="bt" onclick="calculadora.add(8);">8</button>
+            <button id="9" class="bt" onclick="calculadora.add(9);">9</button><button id="mult" class="bt" onclick="calculadora.sin('x');">x</button>
         </section>
         <section class="botoes2">
-            <button id="0" class="bt" onclick="add(0);">0</button><button id="div" class="bt" onclick="sin('/');">/</button>
+            <button id="0" class="bt" onclick="calculadora.add(0);">0</button>
+            <button id="0" class="bt" onclick="calculadora.add('.');">.</button>
+            <button id="div" class="bt" onclick="calculadora.sin('/');">/</button>
         </section>
         <section class="bt2">
-            <button  class="bt" onclick="calc();" >=</button>
+            <button  class="bt" onclick="calculadora.calc();" >=</button>
         </section>
     </main>
 
     <script>
-        let valor = "";
-        let valorInicial = "";
-        let sinal = "";
-        let limp = false;
 
-        function add(n){ 
-            if(limp){
-                document.getElementById("valores").innerHTML = "";
-                limp = false
-            }           
-            valor = valor + n;
-            document.getElementById("valores").innerHTML += n;
-        };
-
-        function sin(params) {
-            valorInicial = valor;
-            valor = "";
-            sinal = params;
-            document.getElementById("valores").innerHTML += " "+ sinal +" ";
-        };
-
-        function calc(){
-            valor = parseFloat(valor);
-            valorInicial = parseFloat(valorInicial);
-            let res = 0;
-
-            if(sinal == "+"){
-                res = valorInicial + valor;
-                document.getElementById("valores").innerHTML = exibeResultado(valorInicial, valor, sinal, res);
+        class Calculadora{
+            constructor(){
+                this.valor = "";
+                this.valorInicial = "";
+                this.final = "";
+                this.limp = false;
             }
-            if(sinal == "-"){
-                res = valorInicial - valor;
-                document.getElementById("valores").innerHTML = exibeResultado(valorInicial, valor, sinal, res);
-            }
-            if(sinal == "x"){
-                res = valorInicial * valor;
-                document.getElementById("valores").innerHTML = exibeResultado(valorInicial, valor, sinal, res);
-            }
-            if(sinal == "/"){
-                res = valorInicial / valor;
-                document.getElementById("valores").innerHTML = exibeResultado(valorInicial, valor, sinal, res);
+            add(n){ 
+                if(this.limp){
+                    document.getElementById("valores").innerHTML = "";
+                    this.limp = false
+                }           
+                this.valor = this.valor + n;
+                document.getElementById("valores").innerHTML += n;
+            };
+
+            sin(params) {
+                this.valorInicial = this.valor;
+                this.valor = "";
+                this.sinal = params;
+                document.getElementById("valores").innerHTML += " "+ this.sinal +" ";
+            };
+
+            calc(){
+                this.valor = parseFloat(this.valor);
+                this.valorInicial = parseFloat(this.valorInicial);
+                let res = 0;
+
+                if(this.sinal == "+"){
+                    res = this.valorInicial + this.valor;
+                    document.getElementById("valores").innerHTML = this.exibeResultado(this.valorInicial, this.valor, this.sinal, res);
+                }
+                if(this.sinal == "-"){
+                    res = this.valorInicial - this.valor;
+                    document.getElementById("valores").innerHTML = this.exibeResultado(this.valorInicial, this.valor, this.sinal, res);
+                }
+                if(this.sinal == "x"){
+                    res = this.valorInicial * this.valor;
+                    document.getElementById("valores").innerHTML = this.exibeResultado(this.valorInicial, this.valor, this.sinal, res);
+                }
+                if(this.sinal == "/"){
+                    res = this.valorInicial / this.valor;
+                    document.getElementById("valores").innerHTML = this.exibeResultado(this.valorInicial, this.valor, this.sinal, res);
+                }
+
+                this.valor = ""
+                this.valorInicial = ""
+                this.limp = true
             }
 
-            valor = ""
-            valorInicial = ""
-            limp = true
+            exibeResultado(v1, v2, s, res){
+                return `${v1} ${s} ${v2} = ${res}`
+            }
         }
-        function exibeResultado(v1, v2, s, res){
-            return `${v1} ${s} ${v2} = ${res}`
-        }
-        
+
+        const calculadora = new Calculadora();
     </script>
 
 </body>
